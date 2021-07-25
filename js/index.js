@@ -138,3 +138,13 @@ function localDescCreated(desc){
         desc, () => sendMessage({'sdp': pc.localDescription}), onError
     );
 }
+
+function desligarCamera(){
+    document.getElementById("localVideo").style.display="none";
+    document.getElementById("off").style.display="none";
+}
+function mostrarCamera(){
+    document.getElementById("localVideo").style.display="block";
+    document.getElementById("off").style.display="block";
+    document.getElementById("on").style.display="none";
+}
