@@ -21,7 +21,7 @@ if(!location.hash){
 
 const roomHash = location.hash.substring(1);
 
-const drone = new ScaleDrone('ZFdrdTJpyoYDV86r'); // ZFdrdTJpyoYDV86r real key// yiS12Ts5RdNhebyM - danki key 
+const drone = new ScaleDrone('ZFdrdTJpyoYDV86r');
 
 const roomName = 'observable-'+roomHash;
 
