@@ -4,30 +4,33 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <!-- CDN and js Sweet-Alert -->
+    <link rel="stylesheet" href="sweetalert2.min.css">
     <script src='https://cdn.scaledrone.com/scaledrone.min.js'></script>
-    <link rel="stylesheet" href="./css/style.css">
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="sweetalert2.all.min.js"></script>
+    
+    
+    <!-- My css -->
+    <link rel="stylesheet" href="./css/style.css">
+ 
+   
     <title>Video Chat</title>
 </head>
 <body>
-    <script>Swal.fire({
-        title: 'Obrigado!',
-        text: 'Por fazer parte dessa comunidade, divirta-se com Chat-Real',
-        icon: 'success',
-        confirmButtonText: 'Vamos nessa'
-      })</script>
-<video id="localVideo" autoplay muted></video>
-<video id="remoteVideo" autoplay></video>
 
+    <video id="localVideo" autoplay muted></video>
+    <video id="remoteVideo" autoplay></video>
+    
 <div class="footer">
     <div class="icones">
             <img src="./img/icons/off.png" alt="Finalizar Chamada" id="off" onclick="desligarCamera()" title="Desligar Camêra"> 
             <img src="./img/icons/off.png" alt="Finalizar Chamada" id="on" onclick="mostrarCamera()" title="Ligar Camêra"> 
     </div> 
 </div>
+
 <script src="sweetalert2.min.js"></script>
-<link rel="stylesheet" href="sweetalert2.min.css">
 <script src="./js/index.js"></script>
 </body>
 </html>

@@ -1,10 +1,27 @@
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+  
+  Toast.fire({
+    icon: 'success',
+    title: 'Logado com sucesso'
+  })
+
 if(!location.hash){
     location.hash = Math.floor(Math.random() * 0xFFFFFF).toString(16);
 }
 
 const roomHash = location.hash.substring(1);
 
-const drone = new ScaleDrone('yiS12Ts5RdNhebyM');
+const drone = new ScaleDrone('ZFdrdTJpyoYDV86r'); // ZFdrdTJpyoYDV86r real key// yiS12Ts5RdNhebyM - danki key 
 
 const roomName = 'observable-'+roomHash;
 
