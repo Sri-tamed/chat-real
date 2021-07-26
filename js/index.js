@@ -12,7 +12,7 @@ const Toast = Swal.mixin({
   
   Toast.fire({
     icon: 'success',
-    title: 'Logado com sucesso'
+    title: 'Logado com sucesso!'
   })
 
 if(!location.hash){
