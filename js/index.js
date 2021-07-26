@@ -63,10 +63,6 @@ drone.on('open', error => {
     });
 
     room.on('members', members=>{
-
-        console.log("Conectado!");
-
-        console.log("Conexões abertas: "+ members.length);
         number = members.length - 1;
         const isOfferer = members.length >= 2;
 
