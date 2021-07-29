@@ -39,7 +39,7 @@ video{
 }
 
 .footer{
-    background-color: #1f1f1f;
+    background-color: rgb(0 0 0 / 15%);
     color: #fff;
     width: 100%;
     height: inherit;
@@ -57,5 +57,7 @@ video{
 
 img{    
     cursor: pointer;
+    width: 50px !important;
+    padding: 10px;
 }
 
