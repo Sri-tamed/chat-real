@@ -1,3 +1,10 @@
+<?php
+include_once('teste.php');
+session_start();
+
+echo "<script language='javascript'> var chaveid = '$chaveid'; </script>";
+
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
