@@ -26,14 +26,6 @@ video{
     padding: 0;
 }
 
-/* .title {
-    color: #fff;
-    position: fixed;
-    top: 10px;
-    left: 50%;
-    transform: translate(-50%,0);
-} */
-
 .real{
     color: rgb(78, 182, 50);
 }
@@ -60,4 +52,8 @@ img{
     width: 50px !important;
     padding: 10px;
 }
+
+
+
+
 
