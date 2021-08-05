@@ -18,7 +18,7 @@
 <br>
 
 <p align="center">
-  <img alt="Chat-Real" src="../chat-real/.github/2.jpg" width="100%">
+  <img alt="Chat-Real" src="/.github/2.jpg" width="100%">
 </p>
 
 ## 🚀 Tecnologias
