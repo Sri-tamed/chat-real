@@ -42,6 +42,16 @@ Nos links abaixo você encontra o layout do projeto web e também do mobile. Lem
 - [Layout Web](#)
 - [Layout Mobile](#)
 
+## Link para acessar em Produção 
+
+
+<a href="https://chat-real.vercel.app">Chat-Real</a>
+
+## Como utilizar com outras pessoas
+
+<p>Simples, basta compartilhar sua url com a pessoa que deseja conversar, ela pode clicar na url e entrará na sala com você, e então é 
+só vocês se divertirem usando o Chat-Real.</p>
+
 ## :memo: Licença
 
 Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para mais detalhes.
