@@ -1,6 +1,14 @@
 # Chat Real 🚀
 
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://chatreall.netlify.app/)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/YOUR_NETLIFY_BADGE_ID/deploy-status)](https://app.netlify.com/sites/chatreall/deploys)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB)](https://reactjs.org/)
+
 Modern, secure and instant video chat application built with React, TypeScript, and WebRTC.
+
+**🌐 Live Demo: [https://chatreall.netlify.app/](https://chatreall.netlify.app/)**
 
 ## ✨ Features
 
