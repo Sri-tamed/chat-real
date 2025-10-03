@@ -1,0 +1,33 @@
+.shareButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(59, 130, 246, 0.9);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.shareButton:hover {
+  background: rgba(59, 130, 246, 1);
+  transform: scale(1.05);
+}
+
+.shareButton:active {
+  transform: scale(0.95);
+}
+
+.copied {
+  background: rgba(34, 197, 94, 0.9);
+}
+
+.copied:hover {
+  background: rgba(34, 197, 94, 1);
+}

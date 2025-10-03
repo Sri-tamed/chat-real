@@ -1,0 +1,222 @@
+.landing {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: 'Inter', sans-serif;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 64px);
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.hero {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  background: linear-gradient(45deg, #ffffff, #f8fafc);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 32px;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  max-width: 800px;
+  margin-bottom: 48px;
+}
+
+.feature {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 24px;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.2s ease;
+}
+
+.feature:hover {
+  transform: translateY(-4px);
+}
+
+.featureIcon {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.featureTitle {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.featureDesc {
+  font-size: 14px;
+  opacity: 0.9;
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+.primaryButton {
+  background: linear-gradient(45deg, #10b981, #059669);
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.primaryButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+}
+
+.secondaryActions {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.secondaryButton {
+  background: transparent;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.secondaryButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.joinRoomSection {
+  margin-top: 32px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 400px;
+  width: 100%;
+}
+
+.joinTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.joinInput {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  margin-bottom: 16px;
+  transition: border-color 0.2s ease;
+}
+
+.joinInput::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.joinInput:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.joinButton {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.joinButton:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.footer {
+  position: absolute;
+  bottom: 20px;
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .title {
+    font-size: 36px;
+  }
+  
+  .subtitle {
+    font-size: 18px;
+  }
+  
+  .features {
+    grid-template-columns: 1fr;
+  }
+  
+  .secondaryActions {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .primaryButton {
+    font-size: 16px;
+    padding: 14px 28px;
+  }
+}
