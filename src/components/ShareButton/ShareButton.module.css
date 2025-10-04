@@ -20,6 +20,11 @@
   transform: scale(1.05);
 }
 
+.shareButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 6px rgba(59,130,246,0.12);
+}
+
 .shareButton:active {
   transform: scale(0.95);
 }

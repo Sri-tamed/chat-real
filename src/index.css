@@ -4,6 +4,17 @@
   padding: 0;
 }
 
+:root {
+  --bg-100: #764ba2;
+  --bg-200: #553C9A;
+  --glass: rgba(255,255,255,0.06);
+  --muted: rgba(255,255,255,0.6);
+  --text: #e6eef8;
+  --primary-500: #3b82f6;
+  --accent-500: #06b6d4;
+  --success-500: #10b981;
+}
+
 html, body {
   width: 100%;
   height: 100%;
@@ -15,10 +26,16 @@ html, body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow: hidden;
+  /* Exact same gradient as landing */
+  background: linear-gradient(135deg, #764ba2 0%, #553C9A 100%);
+  color: var(--text);
+  overflow: auto;
 }
 
 #root {
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
