@@ -26,10 +26,16 @@ html, body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Exact same gradient as landing */
   background: linear-gradient(135deg, #764ba2 0%, #553C9A 100%);
   color: var(--text);
   overflow: auto;
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
 }
 
 #root {
