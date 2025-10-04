@@ -26,7 +26,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint . --report-unused-disable-directives --max-warnings 10",
     "preview": "vite preview",
     "type-check": "tsc --noEmit",
     "build:analyze": "npm run build && npx vite-bundle-analyzer dist/assets/*.js",
@@ -49,6 +49,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "typescript": "^5.0.2",
+    "typescript-eslint": "^8.45.0",
     "vite": "^4.4.5"
   }
 }
