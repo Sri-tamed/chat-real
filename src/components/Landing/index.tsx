@@ -33,6 +33,15 @@ export const Landing = ({ onStartCall }: LandingProps) => {
     }
   };
 
+  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    const pastedText = e.clipboardData.getData('text');
+    if (pastedText.trim()) {
+      setTimeout(() => {
+        onStartCall(pastedText.trim());
+      }, 100);
+    }
+  };
+
   const features = [
     {
       icon: <MdVideoCall />,
@@ -141,6 +150,7 @@ export const Landing = ({ onStartCall }: LandingProps) => {
           value={joinRoomId}
           onChange={(e) => setJoinRoomId(e.target.value)}
           onKeyPress={(e) => e.key === 'Enter' && handleJoinRoom()}
+          onPaste={handlePaste}
         />
         <button 
           className={styles.joinButton}

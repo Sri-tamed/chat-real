@@ -27,12 +27,17 @@
 }
 
 .controlButton:hover {
-  transform: scale(1.05);
-  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-3px) scale(1.06);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 .controlButton:active {
   transform: scale(0.95);
+}
+
+.controlButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(59,130,246,0.14);
 }
 
 .audioButton {
