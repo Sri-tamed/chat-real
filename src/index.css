@@ -4,15 +4,54 @@
   padding: 0;
 }
 
+/* Light theme (default) */
 :root {
-  --bg-100: #764ba2;
-  --bg-200: #553C9A;
-  --glass: rgba(255,255,255,0.06);
-  --muted: rgba(255,255,255,0.6);
-  --text: #e6eef8;
+  --color-bg-gradient-start: #764ba2;
+  --color-bg-gradient-end: #553C9A;
+  --bg-100: var(--color-bg-gradient-start);
+  --bg-200: var(--color-bg-gradient-end);
+  --glass: rgba(255,255,255,0.55);
+  --glass-solid: rgba(255,255,255,0.95);
+  --glass-border: rgba(229,231,235,0.8);
+  --muted: rgba(55,65,81,0.7);
+  --muted-strong: #374151;
+  --text: #1f2937;
+  --text-inverse: #f1f5f9;
+  --surface: #ffffff;
+  --surface-alt: #f3f4f6;
+  --surface-hover: #f1f5f9;
+  --divider: #e5e7eb;
   --primary-500: #3b82f6;
   --accent-500: #06b6d4;
   --success-500: #10b981;
+  --danger-500: #ef4444;
+  --shadow-elevated: 0 6px 18px rgba(2,6,23,0.18);
+  --gradient-primary: linear-gradient(90deg, var(--accent-500), var(--primary-500));
+}
+
+/* Dark theme overrides */
+:root[data-theme='dark'] {
+  --color-bg-gradient-start: #0f172a; /* slate-900 */
+  --color-bg-gradient-end: #1e293b;   /* slate-800 */
+  --bg-100: var(--color-bg-gradient-start);
+  --bg-200: var(--color-bg-gradient-end);
+  --glass: rgba(255,255,255,0.06);
+  --glass-solid: rgba(30,41,59,0.85);
+  --glass-border: rgba(255,255,255,0.08);
+  --muted: rgba(255,255,255,0.6);
+  --muted-strong: #e2e8f0;
+  --text: #e6eef8;
+  --text-inverse: #0f172a;
+  --surface: #1e293b;
+  --surface-alt: #24324a;
+  --surface-hover: #2d3d57;
+  --divider: rgba(255,255,255,0.12);
+  --primary-500: #3b82f6;
+  --accent-500: #06b6d4;
+  --success-500: #10b981;
+  --danger-500: #ef4444;
+  --shadow-elevated: 0 6px 18px rgba(0,0,0,0.55);
+  --gradient-primary: linear-gradient(90deg, var(--accent-500), var(--primary-500));
 }
 
 html, body {
@@ -26,7 +65,7 @@ html, body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(135deg, #764ba2 0%, #553C9A 100%);
+  background: linear-gradient(135deg, var(--color-bg-gradient-start) 0%, var(--color-bg-gradient-end) 100%);
   color: var(--text);
   overflow: auto;
   scrollbar-width: none; 
@@ -44,4 +83,25 @@ body::-webkit-scrollbar {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  transition: background-color .25s ease, color .25s ease;
+}
+
+/* Utility surfaces */
+.surface {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.surface-alt {
+  background: var(--surface-alt);
+}
+
+.elevated {
+  box-shadow: var(--shadow-elevated);
+}
+
+/* Scrollbar theming (only visible if forced to show) */
+body[data-theme='dark']::-webkit-scrollbar-thumb,
+:root[data-theme='dark'] body::-webkit-scrollbar-thumb {
+  background: var(--surface-hover);
 }

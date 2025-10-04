@@ -9,6 +9,9 @@ import {
   MdClose
 } from 'react-icons/md';
 import styles from './Header.module.css';
+import { ThemeToggle } from '../ThemeToggle/index.tsx';
+import { SettingsModal } from '../SettingsModal';
+import { HelpModal } from '../HelpModal';
 
 interface HeaderProps {
   onHelpClick?: () => void;
@@ -19,6 +22,8 @@ interface HeaderProps {
 export const Header = ({ onHelpClick, onSettingsClick, onLoginClick }: HeaderProps) => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [showHelp, setShowHelp] = useState(false);
   
   // Mock user state - later this will come from authentication
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -45,16 +50,14 @@ export const Header = ({ onHelpClick, onSettingsClick, onLoginClick }: HeaderPro
   };
 
   const handleSettings = () => {
-    if (onSettingsClick) {
-      onSettingsClick();
-    }
+    if (onSettingsClick) onSettingsClick();
     setShowUserMenu(false);
+    setShowSettings(true);
   };
 
   const handleHelp = () => {
-    if (onHelpClick) {
-      onHelpClick();
-    }
+    if (onHelpClick) onHelpClick();
+    setShowHelp(true);
   };
 
   return (
@@ -77,6 +80,8 @@ export const Header = ({ onHelpClick, onSettingsClick, onLoginClick }: HeaderPro
             >
               <MdHelpOutline size={20} />
             </button>
+
+            <ThemeToggle />
 
             <button 
               className={styles.settingsButton}
@@ -158,6 +163,9 @@ export const Header = ({ onHelpClick, onSettingsClick, onLoginClick }: HeaderPro
                 <MdHelpOutline size={20} />
                 Help & Support
               </button>
+              <div style={{padding:'6px 4px'}}>
+                <ThemeToggle />
+              </div>
               
               <button className={styles.mobileMenuItem} onClick={handleSettings}>
                 <MdSettings size={20} />
@@ -199,6 +207,12 @@ export const Header = ({ onHelpClick, onSettingsClick, onLoginClick }: HeaderPro
           }}
         />
       )}
+    {showSettings && (
+      <SettingsModal onClose={() => setShowSettings(false)} />
+    )}
+    {showHelp && (
+      <HelpModal onClose={() => setShowHelp(false)} />
+    )}
     </header>
   );
 };

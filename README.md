@@ -19,7 +19,10 @@ Modern, secure and instant video chat application built with React, TypeScript, 
 - ⚡ **Instant Rooms** - Create or join rooms quickly
 - ⏰ **Unlimited Time** - No time restrictions on calls
 - 🧪 **Camera Test** - Test your camera and microphone before joining
-- 🎨 **Modern UI** - Clean, responsive design with modern header
+ - 🎨 **Modern UI** - Clean, responsive design with modern header
+ - 🌓 **Dark Mode** - Toggle between light and dark themes (auto-detects system preference)
+ - ⚙️ **Settings Panel** - Configure appearance (theme) and upcoming media preferences
+ - ❓ **Help & Support Panel** - Built-in FAQ and resource links
 
 ## 🛠️ Tech Stack
 
@@ -108,6 +111,27 @@ src/
 - Toggle microphone on/off  
 - End call and return to homepage
 - Copy room link to share with others
+ - Use the theme toggle in the header (moon/sun icon) to switch between dark and light mode
+ - Open Settings (gear) for theme options
+ - Open Help (question mark) for FAQ and troubleshooting
+
+### Dark Mode
+### Help & Settings Panels
+The header includes dedicated buttons for quick access:
+- Help button opens an in-app modal with FAQ, troubleshooting, and external resource links.
+- Settings button opens a modal where you can change theme or reset to system preference. Media options are placeholders for upcoming releases.
+
+To extend:
+1. Add new rows in `SettingsModal` with user preferences (store in localStorage or future backend).
+2. Add more FAQ entries in `HelpModal` by appending objects or JSX blocks.
+3. Consider adding keyboard focus trapping and ESC key handling for enhanced accessibility.
+The application stores your theme preference in `localStorage` under the key `chat-real-theme` and applies it early during page load to avoid a flash of incorrect theme. If no preference is stored, the system color scheme (`prefers-color-scheme`) is used.
+
+Implementation details:
+- CSS variables defined in `index.css` under `:root` and `:root[data-theme='dark']`
+- A `ThemeProvider` (`useTheme` hook) manages state and persistence
+- `ThemeToggle` component in the header provides the UI switch
+- Accessible: the toggle button has an `aria-label` that updates per state
 
 ## 🔧 Configuration
 
