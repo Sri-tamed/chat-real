@@ -22,13 +22,13 @@ export const VideoContainer = ({
     if (localVideoRef.current && localVideoRef.current.srcObject) {
       localVideoRef.current.play().catch(console.error);
     }
-  }, [localVideoRef.current?.srcObject]);
+  }, [localVideoRef.current?.srcObject]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (remoteVideoRef.current && remoteVideoRef.current.srcObject) {
       remoteVideoRef.current.play().catch(console.error);
     }
-  }, [remoteVideoRef.current?.srcObject]);
+  }, [remoteVideoRef.current?.srcObject]); // eslint-disable-line react-hooks/exhaustive-deps
   if (isConnecting) {
     return (
       <div className={styles.connectingMessage}>

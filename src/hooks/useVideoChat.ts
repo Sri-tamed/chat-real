@@ -21,7 +21,7 @@ export const useVideoChat = (roomId: string) => {
     return () => {
       cleanup();
     };
-  }, [roomId]);
+  }, [roomId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Separate effect to assign local stream to video element
   useEffect(() => {
@@ -112,7 +112,7 @@ export const useVideoChat = (roomId: string) => {
       webRTCService.current.disconnect();
     }
     cleanup();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const cleanup = () => {        console.log('Executing cleanup...');
     

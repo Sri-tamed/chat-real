@@ -16,7 +16,7 @@ export const ShareButton = ({ roomId }: ShareButtonProps) => {
       await navigator.clipboard.writeText(url);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch (error) {
+    } catch {
       // Fallback for browsers that don't support clipboard API
       const url = shareRoomUrl(roomId);
       const textArea = document.createElement('textarea');
