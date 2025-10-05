@@ -158,8 +158,15 @@ export const Landing = ({ onStartCall }: LandingProps) => {
           placeholder="Paste room ID here..."
           value={joinRoomId}
           onChange={(e) => {
-            setJoinRoomId(e.target.value);
-            setError('');
+            const value = e.target.value;
+            setJoinRoomId(value);
+            if (value.trim() === '') {
+              setError('');
+            } else if (!isValidRoomId(value.trim())) {
+              setError('Invalid room ID format. Room IDs should be in the format: numbers-letters');
+            } else {
+              setError('');
+            }
           }}
           onKeyPress={(e) => e.key === 'Enter' && handleJoinRoom()}
           onPaste={handlePaste}
