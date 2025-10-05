@@ -26,9 +26,6 @@ export const CameraTest = ({ onClose }: CameraTestProps) => {
       });
       
       setStream(mediaStream);
-      if (videoRef.current) {
-        videoRef.current.srcObject = mediaStream;
-      }
       
       setStatus('success');
       setMessage('✅ Camera and microphone working perfectly!');
@@ -81,6 +78,12 @@ export const CameraTest = ({ onClose }: CameraTestProps) => {
       }
     }
   };
+
+  useEffect(() => {
+  if (videoRef.current && stream) {
+    videoRef.current.srcObject = stream;
+  }
+  }, [stream]);
 
   useEffect(() => {
     return () => {
