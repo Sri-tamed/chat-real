@@ -9,7 +9,7 @@ import {
   MdArrowForward,
   MdAccessTime 
 } from 'react-icons/md';
-import { generateRoomId } from '../../utils/roomUtils';
+import { generateRoomId, isValidRoomId } from '../../utils/roomUtils';
 import { CameraTest } from '../CameraTest';
 import { Header } from '../Header';
 import styles from './Landing.module.css';
@@ -21,6 +21,7 @@ interface LandingProps {
 export const Landing = ({ onStartCall }: LandingProps) => {
   const [joinRoomId, setJoinRoomId] = useState('');
   const [showCameraTest, setShowCameraTest] = useState(false);
+  const [error, setError] = useState('');
 
   const handleCreateRoom = () => {
     const roomId = generateRoomId();
@@ -28,9 +29,17 @@ export const Landing = ({ onStartCall }: LandingProps) => {
   };
 
   const handleJoinRoom = () => {
-    if (joinRoomId.trim()) {
-      onStartCall(joinRoomId.trim());
+    const trimmed = joinRoomId.trim();
+    if (!trimmed) {
+      setError('Room ID is required');
+      return;
     }
+    if (!isValidRoomId(trimmed)) {
+      setError('Invalid room ID format. Room IDs should be in the format: numbers-letters');
+      return;
+    }
+    setError('');
+    onStartCall(trimmed);
   };
 
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
@@ -148,14 +157,18 @@ export const Landing = ({ onStartCall }: LandingProps) => {
           className={styles.joinInput}
           placeholder="Paste room ID here..."
           value={joinRoomId}
-          onChange={(e) => setJoinRoomId(e.target.value)}
+          onChange={(e) => {
+            setJoinRoomId(e.target.value);
+            setError('');
+          }}
           onKeyPress={(e) => e.key === 'Enter' && handleJoinRoom()}
           onPaste={handlePaste}
         />
-        <button 
+        {error && <p className={styles.error}>{error}</p>}
+        <button
           className={styles.joinButton}
           onClick={handleJoinRoom}
-          disabled={!joinRoomId.trim()}
+          disabled={!joinRoomId.trim() || !!error}
         >
           Join Room
         </button>
