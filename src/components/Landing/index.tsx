@@ -12,6 +12,7 @@ import {
 import { generateRoomId, isValidRoomId } from '../../utils/roomUtils';
 import { CameraTest } from '../CameraTest';
 import { Header } from '../Header';
+
 import styles from './Landing.module.css';
 
 interface LandingProps {
@@ -103,87 +104,87 @@ export const Landing = ({ onStartCall }: LandingProps) => {
     <div className={styles.landing}>
       <Header 
         onHelpClick={handleHelpClick}
-        onSettingsClick={handleSettingsClick}
         onLoginClick={handleLoginClick}
+        onSettingsClick={handleSettingsClick}
       />
       
       <div className={styles.content}>
         <div className={styles.hero}>
-        <h1 className={styles.title}>Video calls and meetings for everyone</h1>
-        <p className={styles.subtitle}>
-          Modern, secure and instant video chat.<br />
-          Connect with anyone, anywhere.
-        </p>
-      </div>
+          <h1 className={styles.title}>Video calls and meetings for everyone</h1>
+          <p className={styles.subtitle}>
+            Modern, secure and instant video chat.<br />
+            Connect with anyone, anywhere.
+          </p>
+        </div>
 
-      <div className={styles.features}>
-        {features.map((feature, index) => (
-          <div key={index} className={styles.feature}>
-            <div className={styles.featureIcon}>
-              {feature.icon}
+        <div className={styles.features}>
+          {features.map((feature, index) => (
+            <div className={styles.feature} key={index}>
+              <div className={styles.featureIcon}>
+                {feature.icon}
+              </div>
+              <h3 className={styles.featureTitle}>{feature.title}</h3>
+              <p className={styles.featureDesc}>{feature.description}</p>
             </div>
-            <h3 className={styles.featureTitle}>{feature.title}</h3>
-            <p className={styles.featureDesc}>{feature.description}</p>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      <div className={styles.actions}>
-        <button className={styles.primaryButton} onClick={handleCreateRoom}>
-          <MdVideoCall size={24} />
-          Create New Room
-          <MdArrowForward size={20} />
-        </button>
-
-        <div className={styles.secondaryActions}>
-          <button className={styles.secondaryButton}>
-            <MdMic size={20} />
-            How it Works?
+        <div className={styles.actions}>
+          <button className={styles.primaryButton} onClick={handleCreateRoom}>
+            <MdVideoCall size={24} />
+            Create New Room
+            <MdArrowForward size={20} />
           </button>
-          <button 
-            className={styles.secondaryButton}
-            onClick={() => setShowCameraTest(true)}
+
+          <div className={styles.secondaryActions}>
+            <button className={styles.secondaryButton}>
+              <MdMic size={20} />
+              How it Works?
+            </button>
+            <button 
+              className={styles.secondaryButton}
+              onClick={() => setShowCameraTest(true)}
+            >
+              <MdVideocam size={20} />
+              Test Camera
+            </button>
+          </div>
+        </div>
+
+        <div className={styles.joinRoomSection}>
+          <h3 className={styles.joinTitle}>Join Existing Room</h3>
+          <input
+            className={styles.joinInput}
+            placeholder="Paste room ID here..."
+            type="text"
+            value={joinRoomId}
+            onChange={(e) => {
+              const value = e.target.value;
+              setJoinRoomId(value);
+              if (value.trim() === '') {
+                setError('');
+              } else if (!isValidRoomId(value.trim())) {
+                setError('Invalid room ID format. Room IDs should be in the format: numbers-letters');
+              } else {
+                setError('');
+              }
+            }}
+            onKeyPress={(e) => e.key === 'Enter' && handleJoinRoom()}
+            onPaste={handlePaste}
+          />
+          {error && <p className={styles.error}>{error}</p>}
+          <button
+            className={styles.joinButton}
+            onClick={handleJoinRoom}
+            disabled={!joinRoomId.trim() || !!error}
           >
-            <MdVideocam size={20} />
-            Test Camera
+            Join Room
           </button>
         </div>
-      </div>
 
-      <div className={styles.joinRoomSection}>
-        <h3 className={styles.joinTitle}>Join Existing Room</h3>
-        <input
-          type="text"
-          className={styles.joinInput}
-          placeholder="Paste room ID here..."
-          value={joinRoomId}
-          onChange={(e) => {
-            const value = e.target.value;
-            setJoinRoomId(value);
-            if (value.trim() === '') {
-              setError('');
-            } else if (!isValidRoomId(value.trim())) {
-              setError('Invalid room ID format. Room IDs should be in the format: numbers-letters');
-            } else {
-              setError('');
-            }
-          }}
-          onKeyPress={(e) => e.key === 'Enter' && handleJoinRoom()}
-          onPaste={handlePaste}
-        />
-        {error && <p className={styles.error}>{error}</p>}
-        <button
-          className={styles.joinButton}
-          onClick={handleJoinRoom}
-          disabled={!joinRoomId.trim() || !!error}
-        >
-          Join Room
-        </button>
-      </div>
-
-      <div className={styles.footer}>
-        🚀 Built with React + TypeScript + WebRTC
-      </div>
+        <div className={styles.footer}>
+          🚀 Built with React + TypeScript + WebRTC
+        </div>
 
         {showCameraTest && (
           <CameraTest onClose={() => setShowCameraTest(false)} />
