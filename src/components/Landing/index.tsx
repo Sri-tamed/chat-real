@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { 
   MdVideoCall, 
   MdMic, 
@@ -9,7 +10,9 @@ import {
   MdArrowForward,
   MdAccessTime 
 } from 'react-icons/md';
+
 import { generateRoomId, isValidRoomId } from '../../utils/roomUtils';
+
 import { CameraTest } from '../CameraTest';
 import { Header } from '../Header';
 
