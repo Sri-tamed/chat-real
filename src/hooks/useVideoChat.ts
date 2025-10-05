@@ -17,34 +17,35 @@ export const useVideoChat = (roomId: string) => {
   const localVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
 
-  useEffect(() => {
-    initializeVideoChat();
-    return () => {
-      cleanup();
-    };
-  }, [roomId]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Separate effect to assign local stream to video element
-  useEffect(() => {
-    if (state.localStream && localVideoRef.current) {        console.log('Assigning local stream to video element');
-      localVideoRef.current.srcObject = state.localStream;
+  const cleanup = useCallback(() => {
+    console.log('Executing cleanup...');
+    
+    // Clean video elements first
+    if (localVideoRef.current) {
+      localVideoRef.current.srcObject = null;
     }
-  }, [state.localStream]);
-
-  // Separate effect to assign remote stream to video element
-  useEffect(() => {
     if (remoteVideoRef.current) {
-      if (state.remoteStream) {
-        console.log('Assigning remote stream to video element');
-        remoteVideoRef.current.srcObject = state.remoteStream;
-      } else {
-        console.log('Removing remote stream from video element');
-        remoteVideoRef.current.srcObject = null;
-      }
+      remoteVideoRef.current.srcObject = null;
     }
-  }, [state.remoteStream]);
 
-  const initializeVideoChat = async () => {
+    // Then clean WebRTC service
+    if (webRTCService.current) {
+      webRTCService.current.cleanup();
+    }
+    
+    // Finally update state
+    setState({
+      localStream: null,
+      remoteStream: null,
+      isConnected: false,
+      isConnecting: false,
+      mediaState: { audio: true, video: true },
+      roomId,
+      error: null
+    });
+  }, [roomId]);
+
+  const initializeVideoChat = useCallback(async () => {
     try {
       setState(prev => ({ ...prev, isConnecting: true }));
       
@@ -53,17 +54,17 @@ export const useVideoChat = (roomId: string) => {
       
       // Configure callbacks
       webRTCService.current.onLocalStream = (stream: MediaStream) => {
-        console.log('Callback onLocalStream chamado com stream:', stream);
+        console.log('Callback onLocalStream called with stream:', stream);
         setState(prev => ({ ...prev, localStream: stream }));
       };
 
       webRTCService.current.onRemoteStream = (stream: MediaStream) => {
-        console.log('Callback onRemoteStream chamado com stream:', stream);
+        console.log('Callback onRemoteStream called with stream:', stream);
         setState(prev => ({ ...prev, remoteStream: stream, isConnected: true }));
       };
 
       webRTCService.current.onDisconnected = () => {
-        console.log('Callback onDisconnected chamado');
+        console.log('Callback onDisconnected called');
         setState(prev => ({ 
           ...prev, 
           remoteStream: null, 
@@ -78,10 +79,34 @@ export const useVideoChat = (roomId: string) => {
     } catch (error) {
       console.error('Error initializing video chat:', error);
       setState(prev => ({ ...prev, isConnecting: false, error: (error as Error).message }));
-
-      // Do not re-throw, handle error in state
     }
-  };
+  }, [roomId]);
+
+  useEffect(() => {
+    initializeVideoChat();
+    return () => {
+      cleanup();
+    };
+  }, [initializeVideoChat, cleanup]);
+
+  useEffect(() => {
+    if (state.localStream && localVideoRef.current) {
+      console.log('Assigning local stream to video element');
+      localVideoRef.current.srcObject = state.localStream;
+    }
+  }, [state.localStream]);
+
+  useEffect(() => {
+    if (remoteVideoRef.current) {
+      if (state.remoteStream) {
+        console.log('Assigning remote stream to video element');
+        remoteVideoRef.current.srcObject = state.remoteStream;
+      } else {
+        console.log('Removing remote stream from video element');
+        remoteVideoRef.current.srcObject = null;
+      }
+    }
+  }, [state.remoteStream]);
 
   const toggleAudio = useCallback(() => {
     if (webRTCService.current && webRTCService.current.localStream) {
@@ -112,34 +137,7 @@ export const useVideoChat = (roomId: string) => {
       webRTCService.current.disconnect();
     }
     cleanup();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const cleanup = () => {        console.log('Executing cleanup...');
-    
-    // Clean video elements first
-    if (localVideoRef.current) {
-      localVideoRef.current.srcObject = null;
-    }
-    if (remoteVideoRef.current) {
-      remoteVideoRef.current.srcObject = null;
-    }
-
-    // Then clean WebRTC service
-    if (webRTCService.current) {
-      webRTCService.current.cleanup();
-    }
-    
-    // Finally update state
-    setState({
-      localStream: null,
-      remoteStream: null,
-      isConnected: false,
-      isConnecting: false,
-      mediaState: { audio: true, video: true },
-      roomId,
-      error: null
-    });
-  };
+  }, [cleanup]);
 
   const reinitializeStream = useCallback(async () => {
     if (webRTCService.current) {
@@ -147,8 +145,8 @@ export const useVideoChat = (roomId: string) => {
         await webRTCService.current.reinitializeStream();
         setState(prev => ({ ...prev, isConnecting: false }));
       } catch (error) {
+        console.error('Error reinitializing stream:', error);
         setState(prev => ({ ...prev, isConnecting: false }));
-        throw error;
       }
     }
   }, []);
@@ -156,7 +154,7 @@ export const useVideoChat = (roomId: string) => {
   const retryConnection = useCallback(() => {
     setState(prev => ({ ...prev, error: null }));
     initializeVideoChat();
-  }, []);
+  }, [initializeVideoChat]);
 
   return {
     ...state,
