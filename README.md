@@ -20,6 +20,20 @@
 
 </div>
 
+## Table of Contents
+
+> Click on any section to navigate quickly.
+
+| | Section | | Section |
+|:---:|:---|:---:|:---|
+|  | [Features](#features) |  | [Configuration](#configuration) |
+|  | [Tech Stack](#tech-stack) |  | [Deployment](#deployment) |
+|  | [Quick Start](#quick-start) |  | [Contributing](#contributing) |
+|  | [Available Scripts](#available-scripts) |  | [Roadmap](#roadmap) |
+|  | [Project Structure](#project-structure) |  | [Known Issues](#known-issues--solutions) |
+|  | [Usage](#usage) |  | [License](#license) |
+
+  
 ## Features
 
 <!-- Features with aligned badges -->
@@ -398,6 +412,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Happy Video Chatting!** 
 
-**Made with ❤️ by the Chat Real community**
+**Made with ❤️ by juninhokaponne the Chat Real community**
 
 </div>
