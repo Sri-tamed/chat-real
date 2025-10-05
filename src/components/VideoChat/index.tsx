@@ -1,10 +1,11 @@
+import { useState } from 'react';
 import { MdSync, MdCheckCircle, MdError, MdArrowBack } from 'react-icons/md';
 import { VideoContainer } from '../VideoContainer';
 import { Controls } from '../Controls';
 import { ShareButton } from '../ShareButton';
 import { useVideoChat } from '../../hooks/useVideoChat';
+import ChatPanel from '../../components/chat/ChatPanel';
 import styles from './VideoChat.module.css';
-import ChatPanel from '../../components/chat/ChatPanel'; // ✅ new import
 
 interface VideoChatProps {
   roomId: string;
@@ -23,9 +24,13 @@ export const VideoChat = ({ roomId, onBackToLanding }: VideoChatProps) => {
     toggleVideo,
     endCall,
     retryConnection,
-    socket,           // ✅ make sure useVideoChat returns this
-    username          // ✅ your user’s display name
+    socket,
+    username
   } = useVideoChat(roomId);
+
+  // ✅ State for chat panel
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const toggleChat = () => setIsChatOpen(prev => !prev);
 
   const handleEndCall = () => {
     endCall();
@@ -103,10 +108,13 @@ export const VideoChat = ({ roomId, onBackToLanding }: VideoChatProps) => {
         onToggleAudio={toggleAudio}
         onToggleVideo={toggleVideo}
         onEndCall={handleEndCall}
+        onToggleChat={toggleChat} // ✅ Chat button integrated here
       />
 
-      {/* ✅ Chat panel added here */}
-      <ChatPanel socket={socket} roomId={roomId} username={username || 'Guest'} />
+      {/* Chat panel */}
+      {isChatOpen && socket && (
+        <ChatPanel socket={socket} roomId={roomId} username={username || 'Guest'} />
+      )}
     </div>
   );
 };

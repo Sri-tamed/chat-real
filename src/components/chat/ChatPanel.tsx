@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { Send, MessageCircle } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { MessageCircle, Send } from 'lucide-react';
 
 interface ChatPanelProps {
   socket: any;
@@ -10,37 +10,51 @@ interface ChatPanelProps {
 
 export default function ChatPanel({ socket, roomId, username }: ChatPanelProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>([]);
 
   useEffect(() => {
     if (!socket) return;
 
     const handleMessage = (data: { sender: string; text: string }) => {
-      setMessages((prev) => [...prev, data]);
+      setMessages(prev => [...prev, data]);
     };
 
-    socket.on("chat-message", handleMessage);
-    return () => socket.off("chat-message", handleMessage);
+    socket.on('chat-message', handleMessage);
+    return () => {
+      socket.off('chat-message', handleMessage);
+    };
   }, [socket]);
 
   const sendMessage = () => {
-    if (message.trim() === "") return;
+    if (message.trim() === '') return;
 
     const newMsg = { sender: username, text: message.trim() };
-    socket.emit("chat-message", { ...newMsg, roomId });
-    setMessages((prev) => [...prev, newMsg]);
-    setMessage("");
+    socket.emit('chat-message', { ...newMsg, roomId });
+    setMessages(prev => [...prev, newMsg]);
+    setMessage('');
   };
 
   return (
     <>
-      {/* Toggle Button */}
+      {/* Chat Toggle Button */}
       <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="absolute top-4 right-4 z-50 bg-gray-800 text-white p-2 rounded-full hover:bg-gray-700 transition"
+        onClick={() => setIsOpen(prev => !prev)}
+        style={{
+          position: 'absolute',
+          bottom: '20px',
+          right: '20px',
+          zIndex: 100,
+          backgroundColor: '#1f2937',
+          color: 'white',
+          padding: '10px',
+          borderRadius: '50%',
+          border: 'none',
+          cursor: 'pointer'
+        }}
+        title="Open Chat"
       >
-        <MessageCircle size={22} />
+        <MessageCircle size={24} />
       </button>
 
       <AnimatePresence>
@@ -50,40 +64,107 @@ export default function ChatPanel({ socket, roomId, username }: ChatPanelProps) 
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: 300, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed right-0 top-0 h-full w-80 bg-gray-900 text-white shadow-lg flex flex-col z-40"
+            style={{
+              position: 'fixed',
+              right: 0,
+              top: 0,
+              height: '100%',
+              width: '300px',
+              backgroundColor: '#1f2937',
+              color: 'white',
+              display: 'flex',
+              flexDirection: 'column',
+              zIndex: 9999,
+              boxShadow: '-2px 0 8px rgba(0,0,0,0.5)'
+            }}
           >
-            <div className="flex justify-between items-center px-4 py-3 border-b border-gray-700">
-              <h2 className="font-semibold text-lg">Chat</h2>
-              <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-white">
+            {/* Header */}
+            <div
+              style={{
+                padding: '12px',
+                borderBottom: '1px solid #374151',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              }}
+            >
+              <h2 style={{ fontWeight: 600 }}>Chat</h2>
+              <button
+                onClick={() => setIsOpen(false)}
+                style={{
+                  color: '#9ca3af',
+                  background: 'none',
+                  border: 'none',
+                  fontSize: '16px',
+                  cursor: 'pointer'
+                }}
+              >
                 ✕
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-3 space-y-2">
+            {/* Messages */}
+            <div
+              style={{
+                flex: 1,
+                overflowY: 'auto',
+                padding: '12px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '6px'
+              }}
+            >
               {messages.map((msg, idx) => (
                 <div
                   key={idx}
-                  className={`p-2 rounded-lg max-w-[70%] ${
-                    msg.sender === username ? "bg-blue-600 ml-auto" : "bg-gray-700"
-                  }`}
+                  style={{
+                    alignSelf: msg.sender === username ? 'flex-end' : 'flex-start',
+                    backgroundColor: msg.sender === username ? '#3b82f6' : '#374151',
+                    borderRadius: '8px',
+                    padding: '6px 10px',
+                    maxWidth: '70%'
+                  }}
                 >
-                  <p className="text-sm font-semibold">{msg.sender}</p>
-                  <p className="text-sm">{msg.text}</p>
+                  <p style={{ fontSize: '12px', fontWeight: 600 }}>{msg.sender}</p>
+                  <p style={{ fontSize: '14px' }}>{msg.text}</p>
                 </div>
               ))}
             </div>
 
-            <div className="p-3 border-t border-gray-700 flex">
+            {/* Input */}
+            <div
+              style={{
+                display: 'flex',
+                borderTop: '1px solid #374151',
+                padding: '8px'
+              }}
+            >
               <input
                 value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-                className="flex-1 p-2 rounded-lg bg-gray-800 text-white outline-none"
+                onChange={e => setMessage(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && sendMessage()}
                 placeholder="Type a message..."
+                style={{
+                  flex: 1,
+                  padding: '6px 10px',
+                  borderRadius: '6px',
+                  border: 'none',
+                  outline: 'none',
+                  backgroundColor: '#111827',
+                  color: 'white'
+                }}
               />
               <button
                 onClick={sendMessage}
-                className="ml-2 bg-blue-600 px-3 rounded-lg hover:bg-blue-500 transition"
+                style={{
+                  marginLeft: '8px',
+                  padding: '6px 12px',
+                  borderRadius: '6px',
+                  backgroundColor: '#3b82f6',
+                  border: 'none',
+                  color: 'white',
+                  cursor: 'pointer'
+                }}
               >
                 <Send size={18} />
               </button>
