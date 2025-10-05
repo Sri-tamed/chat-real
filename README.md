@@ -1,12 +1,10 @@
-
-<div align="center">
-
-![Chat Real Banner](https://via.placeholder.com/800x200/6366f1/ffffff?text=Chat+Real+-+Modern+Video+Chat+Application)
+<p align="center">
+<img src="https://capsule-render.vercel.app/api?type=rect&color=0:000080,100:0000FF&height=150&section=header&text=ChatReal%20-%20Hacktoberfest%202025&fontSize=35&fontColor=ffffff&animation=fadeIn" />
+</p>
 
 <!-- Typing SVG Animation -->
 <div align="center">
   <img src="https://readme-typing-svg.herokuapp.com/?font=Roboto&size=30&duration=4000&color=6366F1&center=true&vCenter=true&width=600&lines=Modern+Video+Chat+Application;Secure+and+Instant;Crystal+Clear+Audio;HD+Video+Calls;Private+and+Safe;Multi-Device+Support" alt="Typing SVG" />
-</div>
 
 <br>
 
@@ -178,7 +176,7 @@ sequenceDiagram
 ### During a Call
 
 | Feature | Description |
-|---------|------|-------------|
+|---------|-------------|
 | Camera Toggle | Toggle video on/off |
 | Microphone Toggle | Toggle audio on/off |
 | End Call | End call and return home |
@@ -221,7 +219,7 @@ VITE_APP_VERSION=1.0.0
 
 </div>
 
-<div align="center">
+<div align="left">
 
 **Note**: Requires HTTPS for camera/microphone access in production.
 
@@ -231,7 +229,7 @@ VITE_APP_VERSION=1.0.0
 
 ### Deploy to Netlify
 
-<div align="center">
+<div align="left">
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/your-username/chat-real)
 
