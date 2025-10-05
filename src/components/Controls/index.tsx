@@ -6,8 +6,10 @@ import {
   MdCallEnd, 
   MdMessage 
 } from 'react-icons/md';
-import type { MediaState } from '../../types';
+
 import styles from './Controls.module.css';
+
+import type { MediaState } from '../../types';
 
 interface ControlsProps {
   mediaState: MediaState;

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { MdSync, MdCheckCircle, MdError, MdArrowBack } from 'react-icons/md';
-import { VideoContainer } from '../VideoContainer';
+
+import { useVideoChat } from '../../hooks/useVideoChat';
 import { Controls } from '../Controls';
 import { ShareButton } from '../ShareButton';
 import { useVideoChat } from '../../hooks/useVideoChat';
@@ -69,7 +70,7 @@ export const VideoChat = ({ roomId, onBackToLanding }: VideoChatProps) => {
 
   return (
     <div className={styles.videoChat}>
-      <button className={styles.backButton} onClick={onBackToLanding} title="Back to home">
+      <button className={styles.backButton} title="Back to home" onClick={onBackToLanding}>
         <MdArrowBack size={20} />
       </button>
 
@@ -100,11 +101,14 @@ export const VideoChat = ({ roomId, onBackToLanding }: VideoChatProps) => {
         remoteVideoRef={remoteVideoRef}
         isConnected={isConnected}
         isConnecting={isConnecting}
+        localVideoRef={localVideoRef}
         mediaState={mediaState}
+        remoteVideoRef={remoteVideoRef}
       />
 
       <Controls
         mediaState={mediaState}
+        onEndCall={handleEndCall}
         onToggleAudio={toggleAudio}
         onToggleVideo={toggleVideo}
         onEndCall={handleEndCall}

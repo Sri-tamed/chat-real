@@ -6,10 +6,12 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  background: rgba(0, 0, 0, 0.8);
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
   border-radius: 50px;
   padding: 12px 24px;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-lg);
   z-index: 1000;
 }
 
@@ -20,62 +22,73 @@
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  border: 2px solid var(--border-default);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.22s cubic-bezier(.2,.9,.2,1);
   font-size: 20px;
+  background: var(--surface-elevated);
+  color: var(--text-primary);
 }
 
 .controlButton:hover {
-  transform: translateY(-3px) scale(1.06);
-  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px) scale(1.05);
+  border-color: var(--border-emphasis);
+  background: var(--hover);
+  box-shadow: var(--shadow-md);
 }
 
 .controlButton:active {
-  transform: scale(0.95);
+  transform: scale(0.98);
 }
 
 .controlButton:focus {
-  outline: none;
-  box-shadow: 0 0 0 4px rgba(59,130,246,0.14);
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
 }
 
 .audioButton {
-  background: var(--audio-bg, #22c55e);
-  color: white;
+  background: var(--success);
+  color: var(--text-primary);
+  border-color: var(--success);
 }
 
 .audioButton.muted {
-  --audio-bg: #ef4444;
+  background: var(--error);
+  border-color: var(--error);
 }
 
 .videoButton {
-  background: var(--video-bg, #3b82f6);
-  color: white;
+  background: var(--brand-500);
+  color: var(--text-primary);
+  border-color: var(--brand-500);
 }
 
 .videoButton.disabled {
-  --video-bg: #ef4444;
+  background: var(--error);
+  border-color: var(--error);
 }
 
 .endCallButton {
-  background: #dc2626;
-  color: white;
+  background: var(--error);
+  color: var(--text-primary);
+  border-color: var(--error);
 }
 
 .endCallButton:hover {
-  background: #b91c1c;
+  background: var(--error-dark);
+  border-color: var(--error-dark);
+  transform: translateY(-2px) scale(1.05);
 }
 
-/* Estilos específicos para estados ativos/inativos */
-.audioButton.muted {
-  background: #ef4444;
-  border-color: rgba(239, 68, 68, 0.5);
+/* Hover states for active buttons */
+.audioButton:hover:not(.muted) {
+  background: var(--success-dark);
+  border-color: var(--success-dark);
 }
 
-.videoButton.disabled {
-  background: #ef4444;
-  border-color: rgba(239, 68, 68, 0.5);
+.videoButton:hover:not(.disabled) {
+  background: var(--brand-600);
+  border-color: var(--brand-600);
 }
 
 .audioButton.muted:hover,
