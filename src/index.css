@@ -5,14 +5,79 @@
 }
 
 :root {
-  --bg-100: #764ba2;
-  --bg-200: #553C9A;
-  --glass: rgba(255,255,255,0.06);
-  --muted: rgba(255,255,255,0.6);
-  --text: #e6eef8;
-  --primary-500: #3b82f6;
-  --accent-500: #06b6d4;
-  --success-500: #10b981;
+  /* Professional Color Palette */
+  
+  /* Background Colors - Dark Professional Theme */
+  --bg-primary: #0f172a;      /* Deep slate - main background */
+  --bg-secondary: #1e293b;    /* Slate 800 - secondary background */
+  --bg-tertiary: #334155;     /* Slate 700 - elevated surfaces */
+  --bg-accent: #475569;       /* Slate 600 - subtle accents */
+  
+  /* Surface Colors */
+  --surface: #1e293b;         /* Cards, modals */
+  --surface-elevated: #334155; /* Elevated cards, dropdowns */
+  --surface-glass: rgba(30, 41, 59, 0.8); /* Glass morphism */
+  
+  /* Border Colors */
+  --border-subtle: #334155;    /* Subtle borders */
+  --border-default: #475569;   /* Default borders */
+  --border-emphasis: #64748b;  /* Emphasized borders */
+  
+  /* Text Colors */
+  --text-primary: #f8fafc;     /* Primary text - white */
+  --text-secondary: #cbd5e1;   /* Secondary text - slate 300 */
+  --text-muted: #94a3b8;       /* Muted text - slate 400 */
+  --text-disabled: #64748b;    /* Disabled text - slate 500 */
+  
+  /* Brand Colors - Professional Blue */
+  --brand-50: #eff6ff;
+  --brand-100: #dbeafe;
+  --brand-200: #bfdbfe;
+  --brand-300: #93c5fd;
+  --brand-400: #60a5fa;
+  --brand-500: #3b82f6;        /* Primary brand color */
+  --brand-600: #2563eb;        /* Darker brand */
+  --brand-700: #1d4ed8;        /* Much darker brand */
+  --brand-800: #1e40af;
+  --brand-900: #1e3a8a;
+  
+  /* Semantic Colors */
+  --success: #10b981;          /* Green - success states */
+  --success-light: #34d399;
+  --success-dark: #059669;
+  
+  --warning: #f59e0b;          /* Amber - warning states */
+  --warning-light: #fbbf24;
+  --warning-dark: #d97706;
+  
+  --error: #ef4444;            /* Red - error states */
+  --error-light: #f87171;
+  --error-dark: #dc2626;
+  
+  --info: #06b6d4;             /* Cyan - info states */
+  --info-light: #22d3ee;
+  --info-dark: #0891b2;
+  
+  /* Interactive States */
+  --hover: rgba(59, 130, 246, 0.1);    /* Subtle brand hover */
+  --active: rgba(59, 130, 246, 0.2);   /* Active state */
+  --focus: #3b82f6;                     /* Focus ring color */
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  /* Legacy variables for compatibility */
+  --bg-100: var(--bg-primary);
+  --bg-200: var(--bg-secondary);
+  --glass: var(--surface-glass);
+  --muted: var(--text-muted);
+  --text: var(--text-primary);
+  --primary-500: var(--brand-500);
+  --accent-500: var(--info);
+  --success-500: var(--success);
 }
 
 html, body {
@@ -26,8 +91,8 @@ html, body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(135deg, #764ba2 0%, #553C9A 100%);
-  color: var(--text);
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-tertiary) 100%);
+  color: var(--text-primary);
   overflow: auto;
   scrollbar-width: none; 
   -ms-overflow-style: none; 
