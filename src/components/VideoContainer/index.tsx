@@ -10,14 +10,14 @@ interface VideoContainerProps {
   mediaState: { audio: boolean; video: boolean };
 }
 
-export const VideoContainer = ({ 
-  localVideoRef, 
-  remoteVideoRef, 
-  isConnected, 
+export const VideoContainer = ({
+  localVideoRef,
+  remoteVideoRef,
+  isConnected,
   isConnecting,
-  mediaState 
+  mediaState
 }: VideoContainerProps) => {
-  
+
   useEffect(() => {
     if (localVideoRef.current && localVideoRef.current.srcObject) {
       localVideoRef.current.play().catch(console.error);
@@ -63,7 +63,7 @@ export const VideoContainer = ({
 
       {/* Vídeo Remoto */}
       <div className={`${styles.videoWrapper} ${styles.remoteVideo}`}>
-        {isConnected ? (
+        {isConnected && remoteVideoRef.current?.srcObject ? (
           <video
             ref={remoteVideoRef}
             className={styles.video}
@@ -74,23 +74,24 @@ export const VideoContainer = ({
           <div className={`${styles.placeholder} ${styles.remoteVideo}`}>
             <div style={{ textAlign: 'center' }}>
               <MdPerson size={64} style={{ marginBottom: '16px' }} />
-              <div style={{ 
-                fontSize: '16px', 
-                color: '#9ca3af',
-                fontFamily: 'Inter, sans-serif',
-                fontWeight: 500
-              }}>
+              <div
+                style={{
+                  fontSize: '16px',
+                  color: '#9ca3af',
+                  fontFamily: 'Inter, sans-serif',
+                  fontWeight: 500,
+                }}
+              >
                 Waiting for another participant...
               </div>
             </div>
           </div>
         )}
-        {isConnected && (
-          <div className={styles.videoLabel}>
-            Participant
-          </div>
+        {isConnected && remoteVideoRef.current?.srcObject && (
+          <div className={styles.videoLabel}>Participant</div>
         )}
       </div>
+
     </div>
   );
 };
