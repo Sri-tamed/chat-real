@@ -9,7 +9,8 @@ export const useVideoChat = (roomId: string) => {
     isConnected: false,
     isConnecting: false,
     mediaState: { audio: true, video: true },
-    roomId
+    roomId,
+    error: null
   });
 
   const webRTCService = useRef<WebRTCService | null>(null);
@@ -76,10 +77,9 @@ export const useVideoChat = (roomId: string) => {
       setState(prev => ({ ...prev, isConnecting: false }));
     } catch (error) {
       console.error('Error initializing video chat:', error);
-      setState(prev => ({ ...prev, isConnecting: false }));
-      
-      // Re-throw error so component can handle it
-      throw error;
+      setState(prev => ({ ...prev, isConnecting: false, error: (error as Error).message }));
+
+      // Do not re-throw, handle error in state
     }
   };
 
@@ -136,7 +136,8 @@ export const useVideoChat = (roomId: string) => {
       isConnected: false,
       isConnecting: false,
       mediaState: { audio: true, video: true },
-      roomId
+      roomId,
+      error: null
     });
   };
 
@@ -152,6 +153,11 @@ export const useVideoChat = (roomId: string) => {
     }
   }, []);
 
+  const retryConnection = useCallback(() => {
+    setState(prev => ({ ...prev, error: null }));
+    initializeVideoChat();
+  }, []);
+
   return {
     ...state,
     localVideoRef,
@@ -160,6 +166,7 @@ export const useVideoChat = (roomId: string) => {
     toggleVideo,
     endCall,
     reconnect: initializeVideoChat,
-    reinitializeStream
+    reinitializeStream,
+    retryConnection
   };
 };

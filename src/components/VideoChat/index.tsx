@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { MdSync, MdCheckCircle, MdError, MdArrowBack } from 'react-icons/md';
 import { VideoContainer } from '../VideoContainer';
 import { Controls } from '../Controls';
@@ -12,18 +11,17 @@ interface VideoChatProps {
 }
 
 export const VideoChat = ({ roomId, onBackToLanding }: VideoChatProps) => {
-  const [error, setError] = useState<string>('');
-
   const {
     localVideoRef,
     remoteVideoRef,
     isConnected,
     isConnecting,
     mediaState,
+    error,
     toggleAudio,
     toggleVideo,
     endCall,
-    reconnect
+    retryConnection
   } = useVideoChat(roomId);
 
   const handleEndCall = () => {
@@ -32,33 +30,8 @@ export const VideoChat = ({ roomId, onBackToLanding }: VideoChatProps) => {
     onBackToLanding();
   };
 
-  // Function for audio-only mode
-  const handleAudioOnly = () => {
-    setError('');
-    // Implement audio-only mode if needed
-    console.log('Trying audio-only mode...');
-  };
-
   const handleRetry = () => {
-    setError('');
-    reconnect().catch((err) => {
-      console.error('Detailed error:', err);
-      
-      // More specific error messages
-      let errorMessage = 'Unknown error accessing media.';
-      
-      if (err.message.includes('NotReadableError') || err.message.includes('Could not start video source')) {
-        errorMessage = 'Camera in use by another application or hardware unavailable. Close other apps using camera and reload the page.';
-      } else if (err.message.includes('NotAllowedError') || err.message.includes('Permission denied')) {
-        errorMessage = 'Permission denied. Click on the camera icon in the address bar and allow access.';
-      } else if (err.message.includes('NotFoundError') || err.message.includes('DevicesNotFoundError')) {
-        errorMessage = 'Camera or microphone not found. Check if they are connected.';
-      } else if (err.message.includes('OverconstrainedError')) {
-        errorMessage = 'Configuration not supported by camera. Trying more basic configuration...';
-      }
-      
-      setError(errorMessage);
-    });
+    retryConnection();
   };
 
   const getConnectionStatus = () => {
@@ -108,9 +81,6 @@ export const VideoChat = ({ roomId, onBackToLanding }: VideoChatProps) => {
           <div className={styles.errorActions}>
             <button className={styles.retryButton} onClick={handleRetry}>
               Try Again
-            </button>
-            <button className={styles.audioOnlyButton} onClick={handleAudioOnly}>
-              Audio Only
             </button>
           </div>
         </div>
