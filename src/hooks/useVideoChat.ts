@@ -22,9 +22,13 @@ export const useVideoChat = (roomId: string) => {
     
     // Clean video elements first
     if (localVideoRef.current) {
+      // Pause video and remove srcObject
+      localVideoRef.current.pause();
       localVideoRef.current.srcObject = null;
     }
     if (remoteVideoRef.current) {
+      // Pause video and remove srcObject
+      remoteVideoRef.current.pause();
       remoteVideoRef.current.srcObject = null;
     }
 
