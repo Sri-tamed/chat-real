@@ -348,10 +348,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 <!-- GitHub stats with animations -->
 <div align="center">
 
-![GitHub stars](https://img.shields.io/github/stars/your-username/chat-real?style=social&label=Stars)
-![GitHub forks](https://img.shields.io/github/forks/your-username/chat-real?style=social&label=Forks)
-![GitHub issues](https://img.shields.io/github/issues/your-username/chat-real?label=Issues)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/your-username/chat-real?label=Pull%20Requests)
+![GitHub stars](https://img.shields.io/github/stars/juninhokaponne/chat-real?style=social&label=Stars)
+![GitHub forks](https://img.shields.io/github/forks/juninhokaponne/chat-real?style=social&label=Forks)
+![GitHub issues](https://img.shields.io/github/issues/juninhokaponne/chat-real?label=Issues)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/juninhokaponne/chat-real?label=Pull%20Requests)
 
 </div>
 
@@ -375,10 +375,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 | Platform | Link | Response Time |
 |----------|------|---------------|
-| GitHub Issues | [Report Bug](https://github.com/your-username/chat-real/issues) | 24-48 hours |
-| Discussions | [Start Discussion](https://github.com/your-username/chat-real/discussions) | 12-24 hours |
-| Bug Reports | [Bug Tracker](https://github.com/your-username/chat-real/issues) | 24 hours |
-| Feature Requests | [Feature Ideas](https://github.com/your-username/chat-real/issues) | 48 hours |
+| GitHub Issues | [Report Bug](https://github.com/juninhokaponne/chat-real/issues) | 24-48 hours |
+| Discussions | [Start Discussion](https://github.com/juninhokaponne/chat-real/discussions) | 12-24 hours |
+| Bug Reports | [Bug Tracker](https://github.com/juninhokaponne/chat-real/issues) | 24 hours |
+| Feature Requests | [Feature Ideas](https://github.com/juninhokaponne/chat-real/issues) | 48 hours |
 
 </div>
 
@@ -389,7 +389,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ### ⭐ Don't forget to star the repository if you find this project useful!
 
 <!-- Animated visitor counter -->
-![Visitor Count](https://komarev.com/ghpvc/?username=your-username&label=Profile%20Views&color=blue&style=flat)
+![Visitor Count](https://komarev.com/ghpvc/?username=username&label=Profile%20Views&color=blue&style=flat)
 
 <!-- Final typing animation -->
 <div align="center">
