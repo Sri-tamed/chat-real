@@ -8,10 +8,14 @@ interface SettingsModalProps {
 }
 
 export const SettingsModal = ({ onClose }: SettingsModalProps) => {
-  const { theme, setTheme } = useTheme();
+  const { setTheme } = useTheme();
 
   const resetToSystem = () => {
-    try { localStorage.removeItem('chat-real-theme'); } catch {}
+    try {
+      localStorage.removeItem('chat-real-theme');
+  } catch {
+      // ignore storage errors (private mode or quota)
+    }
     const systemPref = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     setTheme(systemPref as 'light' | 'dark');
   };
