@@ -15,12 +15,11 @@ export const CameraTest = ({ onClose }: CameraTestProps) => {
   const [message, setMessage] = useState('');
   const videoRef = useRef<HTMLVideoElement>(null);
   
-  // --- NEW: Refs for Audio Visualizer ---
+  // Refs for Audio Visualizer
   const visualizerRef = useRef<HTMLCanvasElement>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const animationFrameIdRef = useRef<number | null>(null);
-  // --- END NEW ---
 
   const startTest = async () => {
     setStatus('testing');
@@ -36,9 +35,8 @@ export const CameraTest = ({ onClose }: CameraTestProps) => {
       setStatus('success');
       setMessage('✅ Camera and microphone working perfectly!');
 
-      // --- NEW: Initialize and start the audio visualizer ---
+      // Initialize and start the audio visualizer
       initializeAudioVisualizer(mediaStream);
-      // --- END NEW ---
 
     } catch (error) {
       console.error('Error accessing media:', error);
@@ -58,7 +56,7 @@ export const CameraTest = ({ onClose }: CameraTestProps) => {
     }
   };
 
-  // --- NEW: Function to set up and run the audio visualizer ---
+  // Function to set up and run the audio visualizer
   const initializeAudioVisualizer = (mediaStream: MediaStream) => {
     const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
     const analyser = audioContext.createAnalyser();
@@ -99,7 +97,6 @@ export const CameraTest = ({ onClose }: CameraTestProps) => {
 
     draw();
   };
-  // --- END NEW ---
 
   const stopTest = () => {
     if (stream) {
@@ -112,14 +109,13 @@ export const CameraTest = ({ onClose }: CameraTestProps) => {
       videoRef.current.srcObject = null;
     }
 
-    // --- NEW: Cleanup for the audio visualizer ---
+    // Cleanup for the audio visualizer
     if (animationFrameIdRef.current) {
       cancelAnimationFrame(animationFrameIdRef.current);
     }
     if (audioContextRef.current) {
       audioContextRef.current.close();
     }
-    // --- END NEW ---
   };
 
   const toggleVideo = () => {
@@ -150,7 +146,7 @@ export const CameraTest = ({ onClose }: CameraTestProps) => {
 
   useEffect(() => {
     return () => {
-      // --- MODIFIED: Ensure stopTest is called on unmount for full cleanup ---
+      // Ensure stopTest is called on unmount for full cleanup
       stopTest();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -199,14 +195,14 @@ export const CameraTest = ({ onClose }: CameraTestProps) => {
           )}
         </div>
         
-        {/* --- NEW: Audio Visualizer Canvas --- */}
+        {/* Audio Visualizer Canvas */}
         {stream && (
           <div className={styles.visualizerContainer}>
-            <label className={styles.visualizerLabel}>Microphone Level</label>
+            {/* --- FIX: Replaced <label> with <span> to fix accessibility lint error --- */}
+            <span className={styles.visualizerLabel}>Microphone Level</span>
             <canvas ref={visualizerRef} className={styles.visualizerCanvas} width="300" height="20" />
           </div>
         )}
-        {/* --- END NEW --- */}
 
         {message && (
           <div className={`${styles.status} ${getStatusClass()}`}>
