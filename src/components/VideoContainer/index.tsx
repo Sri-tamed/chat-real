@@ -1,5 +1,6 @@
 import { useEffect, type RefObject } from 'react';
 import { MdVideocamOff, MdPerson } from 'react-icons/md';
+
 import styles from './VideoContainer.module.css';
 
 interface VideoContainerProps {
@@ -32,7 +33,7 @@ export const VideoContainer = ({
   if (isConnecting) {
     return (
       <div className={styles.connectingMessage}>
-        <div className={styles.spinner}></div>
+        <div className={styles.spinner} />
         <p>Connecting to video room...</p>
       </div>
     );
@@ -43,12 +44,12 @@ export const VideoContainer = ({
       {/* Vídeo Local */}
       <div className={`${styles.videoWrapper} ${styles.localVideo}`}>
         <video
-          ref={localVideoRef}
-          className={styles.video}
           autoPlay
           muted
           playsInline
+          className={styles.video}
           controls={false}
+          ref={localVideoRef}
           style={{ display: mediaState.video ? 'block' : 'none' }}
         />
         {!mediaState.video && (
@@ -65,10 +66,10 @@ export const VideoContainer = ({
       <div className={`${styles.videoWrapper} ${styles.remoteVideo}`}>
         {isConnected && remoteVideoRef.current?.srcObject ? (
           <video
-            ref={remoteVideoRef}
-            className={styles.video}
             autoPlay
             playsInline
+            className={styles.video}
+            ref={remoteVideoRef}
           />
         ) : (
           <div className={`${styles.placeholder} ${styles.remoteVideo}`}>
