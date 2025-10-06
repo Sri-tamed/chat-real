@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { MdSync, MdCheckCircle, MdError, MdArrowBack } from 'react-icons/md';
 
+// Internal imports
+import ChatPanel from '../../components/chat/ChatPanel';
 import { useVideoChat } from '../../hooks/useVideoChat';
 import { Controls } from '../Controls';
 import { ShareButton } from '../ShareButton';
-
-import ChatPanel from '../../components/chat/ChatPanel';
-import styles from './VideoChat.module.css';
 import { VideoContainer } from '../VideoContainer';
+
+// Styles
+import styles from './VideoChat.module.css';
 
 interface VideoChatProps {
   roomId: string;
@@ -30,7 +32,6 @@ export const VideoChat = ({ roomId, onBackToLanding }: VideoChatProps) => {
     username
   } = useVideoChat(roomId);
 
-  // ✅ State for chat panel
   const [isChatOpen, setIsChatOpen] = useState(false);
   const toggleChat = () => setIsChatOpen(prev => !prev);
 
@@ -110,10 +111,9 @@ export const VideoChat = ({ roomId, onBackToLanding }: VideoChatProps) => {
         onEndCall={handleEndCall}
         onToggleAudio={toggleAudio}
         onToggleVideo={toggleVideo}
-        onToggleChat={toggleChat} // ✅ Chat button integrated here
+        onToggleChat={toggleChat}
       />
 
-      {/* Chat panel */}
       {isChatOpen && socket && (
         <ChatPanel socket={socket} roomId={roomId} username={username || 'Guest'} />
       )}
