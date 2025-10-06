@@ -14,6 +14,13 @@ export const CameraTest = ({ onClose }: CameraTestProps) => {
   const [audioEnabled, setAudioEnabled] = useState(true);
   const [message, setMessage] = useState('');
   const videoRef = useRef<HTMLVideoElement>(null);
+  
+  // --- NEW: Refs for Audio Visualizer ---
+  const visualizerRef = useRef<HTMLCanvasElement>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const analyserRef = useRef<AnalyserNode | null>(null);
+  const animationFrameIdRef = useRef<number | null>(null);
+  // --- END NEW ---
 
   const startTest = async () => {
     setStatus('testing');
@@ -26,9 +33,13 @@ export const CameraTest = ({ onClose }: CameraTestProps) => {
       });
       
       setStream(mediaStream);
-      
       setStatus('success');
       setMessage('✅ Camera and microphone working perfectly!');
+
+      // --- NEW: Initialize and start the audio visualizer ---
+      initializeAudioVisualizer(mediaStream);
+      // --- END NEW ---
+
     } catch (error) {
       console.error('Error accessing media:', error);
       setStatus('error');
@@ -47,6 +58,49 @@ export const CameraTest = ({ onClose }: CameraTestProps) => {
     }
   };
 
+  // --- NEW: Function to set up and run the audio visualizer ---
+  const initializeAudioVisualizer = (mediaStream: MediaStream) => {
+    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const analyser = audioContext.createAnalyser();
+    const source = audioContext.createMediaStreamSource(mediaStream);
+    
+    source.connect(analyser);
+    analyser.fftSize = 256;
+    
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+    
+    audioContextRef.current = audioContext;
+    analyserRef.current = analyser;
+
+    const draw = () => {
+      if (!analyserRef.current || !visualizerRef.current) return;
+
+      animationFrameIdRef.current = requestAnimationFrame(draw);
+      analyserRef.current.getByteFrequencyData(dataArray);
+
+      const canvas = visualizerRef.current;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      const { width, height } = canvas;
+      ctx.clearRect(0, 0, width, height);
+      
+      let sum = 0;
+      for (let i = 0; i < bufferLength; i++) {
+        sum += dataArray[i];
+      }
+      const avg = sum / bufferLength;
+      
+      const barWidth = (avg / 255) * width;
+      ctx.fillStyle = '#4ade80'; // A nice green color
+      ctx.fillRect(0, 0, barWidth, height);
+    };
+
+    draw();
+  };
+  // --- END NEW ---
+
   const stopTest = () => {
     if (stream) {
       stream.getTracks().forEach(track => track.stop());
@@ -57,6 +111,15 @@ export const CameraTest = ({ onClose }: CameraTestProps) => {
     if (videoRef.current) {
       videoRef.current.srcObject = null;
     }
+
+    // --- NEW: Cleanup for the audio visualizer ---
+    if (animationFrameIdRef.current) {
+      cancelAnimationFrame(animationFrameIdRef.current);
+    }
+    if (audioContextRef.current) {
+      audioContextRef.current.close();
+    }
+    // --- END NEW ---
   };
 
   const toggleVideo = () => {
@@ -80,19 +143,18 @@ export const CameraTest = ({ onClose }: CameraTestProps) => {
   };
 
   useEffect(() => {
-  if (videoRef.current && stream) {
-    videoRef.current.srcObject = stream;
-  }
+    if (videoRef.current && stream) {
+      videoRef.current.srcObject = stream;
+    }
   }, [stream]);
 
   useEffect(() => {
     return () => {
-      // Cleanup on unmount
-      if (stream) {
-        stream.getTracks().forEach(track => track.stop());
-      }
+      // --- MODIFIED: Ensure stopTest is called on unmount for full cleanup ---
+      stopTest();
     };
-  }, [stream]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getStatusClass = () => {
     switch (status) {
@@ -136,6 +198,15 @@ export const CameraTest = ({ onClose }: CameraTestProps) => {
             </div>
           )}
         </div>
+        
+        {/* --- NEW: Audio Visualizer Canvas --- */}
+        {stream && (
+          <div className={styles.visualizerContainer}>
+            <label className={styles.visualizerLabel}>Microphone Level</label>
+            <canvas ref={visualizerRef} className={styles.visualizerCanvas} width="300" height="20" />
+          </div>
+        )}
+        {/* --- END NEW --- */}
 
         {message && (
           <div className={`${styles.status} ${getStatusClass()}`}>
