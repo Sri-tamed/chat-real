@@ -4,9 +4,10 @@ import { MdSync, MdCheckCircle, MdError, MdArrowBack } from 'react-icons/md';
 import { useVideoChat } from '../../hooks/useVideoChat';
 import { Controls } from '../Controls';
 import { ShareButton } from '../ShareButton';
-import { useVideoChat } from '../../hooks/useVideoChat';
+
 import ChatPanel from '../../components/chat/ChatPanel';
 import styles from './VideoChat.module.css';
+import { VideoContainer } from '../VideoContainer';
 
 interface VideoChatProps {
   roomId: string;
@@ -101,9 +102,7 @@ export const VideoChat = ({ roomId, onBackToLanding }: VideoChatProps) => {
         remoteVideoRef={remoteVideoRef}
         isConnected={isConnected}
         isConnecting={isConnecting}
-        localVideoRef={localVideoRef}
         mediaState={mediaState}
-        remoteVideoRef={remoteVideoRef}
       />
 
       <Controls
@@ -111,7 +110,6 @@ export const VideoChat = ({ roomId, onBackToLanding }: VideoChatProps) => {
         onEndCall={handleEndCall}
         onToggleAudio={toggleAudio}
         onToggleVideo={toggleVideo}
-        onEndCall={handleEndCall}
         onToggleChat={toggleChat} // ✅ Chat button integrated here
       />
 
