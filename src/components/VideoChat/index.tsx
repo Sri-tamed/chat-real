@@ -1,10 +1,14 @@
+import { useState } from 'react';
 import { MdSync, MdCheckCircle, MdError, MdArrowBack } from 'react-icons/md';
 
+// Internal imports
+import ChatPanel from '../../components/chat/ChatPanel';
 import { useVideoChat } from '../../hooks/useVideoChat';
 import { Controls } from '../Controls';
 import { ShareButton } from '../ShareButton';
 import { VideoContainer } from '../VideoContainer';
 
+// Styles
 import styles from './VideoChat.module.css';
 
 interface VideoChatProps {
@@ -23,12 +27,16 @@ export const VideoChat = ({ roomId, onBackToLanding }: VideoChatProps) => {
     toggleAudio,
     toggleVideo,
     endCall,
-    retryConnection
+    retryConnection,
+    socket,
+    username
   } = useVideoChat(roomId);
+
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const toggleChat = () => setIsChatOpen(prev => !prev);
 
   const handleEndCall = () => {
     endCall();
-    // Go back to landing page
     onBackToLanding();
   };
 
@@ -37,20 +45,22 @@ export const VideoChat = ({ roomId, onBackToLanding }: VideoChatProps) => {
   };
 
   const getConnectionStatus = () => {
-    if (isConnecting) return { 
-      icon: <MdSync className={styles.spinIcon} size={16} />, 
-      text: 'Connecting...', 
-      class: styles.statusConnecting 
-    };
-    if (isConnected) return { 
-      icon: <MdCheckCircle size={16} />, 
-      text: 'Connected', 
-      class: styles.statusConnected 
-    };
-    return { 
-      icon: <MdError size={16} />, 
-      text: 'Waiting', 
-      class: styles.statusDisconnected 
+    if (isConnecting)
+      return {
+        icon: <MdSync className={styles.spinIcon} size={16} />,
+        text: 'Connecting...',
+        class: styles.statusConnecting
+      };
+    if (isConnected)
+      return {
+        icon: <MdCheckCircle size={16} />,
+        text: 'Connected',
+        class: styles.statusConnected
+      };
+    return {
+      icon: <MdError size={16} />,
+      text: 'Waiting',
+      class: styles.statusDisconnected
     };
   };
 
@@ -70,7 +80,7 @@ export const VideoChat = ({ roomId, onBackToLanding }: VideoChatProps) => {
         Room: {roomId.substring(0, 8)}...
         <ShareButton roomId={roomId} />
       </div>
-      
+
       <div className={`${styles.connectionStatus} ${status.class}`}>
         {status.icon}
         {status.text}
@@ -88,22 +98,25 @@ export const VideoChat = ({ roomId, onBackToLanding }: VideoChatProps) => {
         </div>
       )}
 
-      <VideoContainer 
+      <VideoContainer
+        localVideoRef={localVideoRef}
+        remoteVideoRef={remoteVideoRef}
         isConnected={isConnected}
         isConnecting={isConnecting}
-        localVideoRef={localVideoRef}
         mediaState={mediaState}
-        remoteVideoRef={remoteVideoRef}
       />
 
-      <Controls 
+      <Controls
         mediaState={mediaState}
         onEndCall={handleEndCall}
         onToggleAudio={toggleAudio}
         onToggleVideo={toggleVideo}
+        onToggleChat={toggleChat}
       />
 
-      
+      {isChatOpen && socket && (
+        <ChatPanel socket={socket} roomId={roomId} username={username || 'Guest'} />
+      )}
     </div>
   );
 };
