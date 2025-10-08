@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
-import { MdClose, MdVideocam, MdVideocamOff, MdMic, MdMicOff } from 'react-icons/md';
+// --- FIX: 'MdPlayArrow' has been removed from this line ---
+import { MdClose, MdVideocam, MdVideocamOff, MdMic, MdMicOff, MdRecordVoiceOver } from 'react-icons/md';
+
 import styles from './CameraTest.module.css';
 
 interface CameraTestProps {
@@ -13,6 +15,11 @@ export const CameraTest = ({ onClose }: CameraTestProps) => {
   const [audioEnabled, setAudioEnabled] = useState(true);
   const [message, setMessage] = useState('');
   const videoRef = useRef<HTMLVideoElement>(null);
+  
+  // Echo Test Logic State
+  const [echoStatus, setEchoStatus] = useState<'idle' | 'recording' | 'playing' | 'success'>('idle');
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
 
   const startTest = async () => {
     setStatus('testing');
@@ -24,24 +31,19 @@ export const CameraTest = ({ onClose }: CameraTestProps) => {
         audio: true
       });
       
-      setStream(mediaStream);
-      if (videoRef.current) {
-        videoRef.current.srcObject = mediaStream;
+      if (mediaStream.getAudioTracks().length === 0) {
+        throw new Error("No audio track found. Is your microphone enabled?");
       }
       
+      setStream(mediaStream);
       setStatus('success');
-      setMessage('✅ Camera and microphone working perfectly!');
+      setMessage('✅ Camera and microphone permissions granted!');
     } catch (error) {
       console.error('Error accessing media:', error);
       setStatus('error');
-      
       if (error instanceof Error) {
         if (error.name === 'NotAllowedError') {
-          setMessage('❌ Permission denied. Click on the camera icon in the address bar and allow access.');
-        } else if (error.name === 'NotFoundError') {
-          setMessage('❌ Camera or microphone not found. Check if they are connected.');
-        } else if (error.name === 'NotReadableError') {
-          setMessage('❌ Camera in use by another application. Close other apps using camera.');
+          setMessage('❌ Permission denied. Please allow access in your browser.');
         } else {
           setMessage(`❌ Error: ${error.message}`);
         }
@@ -54,11 +56,48 @@ export const CameraTest = ({ onClose }: CameraTestProps) => {
       stream.getTracks().forEach(track => track.stop());
       setStream(null);
     }
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
+        mediaRecorderRef.current.stop();
+    }
+    setEchoStatus('idle');
+    audioChunksRef.current = [];
     setStatus('idle');
     setMessage('');
     if (videoRef.current) {
       videoRef.current.srcObject = null;
     }
+  };
+
+  const handleEchoTest = () => {
+    if (!stream) return;
+    
+    setEchoStatus('recording');
+    mediaRecorderRef.current = new MediaRecorder(stream);
+    audioChunksRef.current = [];
+
+    mediaRecorderRef.current.ondataavailable = (event) => {
+      audioChunksRef.current.push(event.data);
+    };
+
+    mediaRecorderRef.current.onstop = () => {
+      setEchoStatus('playing');
+      const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
+      const audioUrl = URL.createObjectURL(audioBlob);
+      const audio = new Audio(audioUrl);
+      audio.play();
+      audio.onended = () => {
+        setEchoStatus('success');
+        URL.revokeObjectURL(audioUrl);
+      };
+    };
+
+    mediaRecorderRef.current.start();
+
+    setTimeout(() => {
+      if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
+        mediaRecorderRef.current.stop();
+      }
+    }, 3000); // Record for 3 seconds
   };
 
   const toggleVideo = () => {
@@ -82,13 +121,17 @@ export const CameraTest = ({ onClose }: CameraTestProps) => {
   };
 
   useEffect(() => {
-    return () => {
-      // Cleanup on unmount
-      if (stream) {
-        stream.getTracks().forEach(track => track.stop());
-      }
-    };
+    if (videoRef.current && stream) {
+      videoRef.current.srcObject = stream;
+    }
   }, [stream]);
+
+  useEffect(() => {
+    return () => {
+      stopTest();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getStatusClass = () => {
     switch (status) {
@@ -111,17 +154,17 @@ export const CameraTest = ({ onClose }: CameraTestProps) => {
         <div className={styles.videoPreview}>
           {stream ? (
             <video
-              ref={videoRef}
-              className={styles.video}
               autoPlay
               muted
               playsInline
+              className={styles.video}
+              ref={videoRef}
               style={{ display: videoEnabled ? 'block' : 'none' }}
             />
           ) : (
             <div className={styles.placeholder}>
               <MdVideocam size={48} />
-              <p>Click "Start Test" to test your camera</p>
+              <p>Click &quot;Start Test&quot; to test your camera</p>
             </div>
           )}
           
@@ -132,19 +175,38 @@ export const CameraTest = ({ onClose }: CameraTestProps) => {
             </div>
           )}
         </div>
-
+        
         {message && (
           <div className={`${styles.status} ${getStatusClass()}`}>
             {message}
           </div>
         )}
 
+        {stream && (
+            <div className={styles.echoTestContainer}>
+                <button 
+                    onClick={handleEchoTest}
+                    className={styles.echoButton}
+                    disabled={echoStatus === 'recording' || echoStatus === 'playing'}
+                >
+                    <MdRecordVoiceOver />
+                    {echoStatus === 'idle' && 'Test Microphone'}
+                    {echoStatus === 'recording' && 'Recording... Speak now!'}
+                    {echoStatus === 'playing' && 'Playing back...'}
+                    {echoStatus === 'success' && 'Test Again'}
+                </button>
+                {echoStatus === 'success' && (
+                    <p className={styles.echoSuccessMessage}>✅ Test complete! You should have heard your voice.</p>
+                )}
+            </div>
+        )}
+
         <div className={styles.controls}>
           {!stream ? (
             <button 
               className={`${styles.controlButton} ${styles.primaryButton}`}
-              onClick={startTest}
               disabled={status === 'testing'}
+              onClick={startTest}
             >
               {status === 'testing' ? 'Testing...' : 'Start Test'}
             </button>
@@ -163,7 +225,7 @@ export const CameraTest = ({ onClose }: CameraTestProps) => {
                 onClick={toggleAudio}
               >
                 {audioEnabled ? <MdMic /> : <MdMicOff />}
-                {audioEnabled ? 'Turn Off' : 'Turn On'} Audio
+                {audioEnabled ? 'Mute' : 'Unmute'} Mic
               </button>
               
               <button 
@@ -175,11 +237,6 @@ export const CameraTest = ({ onClose }: CameraTestProps) => {
             </>
           )}
         </div>
-
-        <p style={{ fontSize: '14px', color: '#6b7280', textAlign: 'center', marginTop: '16px' }}>
-          This test checks if your camera and microphone are working properly 
-          before joining a call.
-        </p>
       </div>
     </div>
   );

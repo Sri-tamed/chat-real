@@ -23,4 +23,5 @@ export interface VideoChatState {
   isConnecting: boolean;
   mediaState: MediaState;
   roomId: string;
+  error: string | null;
 }

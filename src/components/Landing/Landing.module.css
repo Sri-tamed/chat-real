@@ -1,3 +1,4 @@
+
 .landing {
   min-height: 100vh;
   background: linear-gradient(135deg, var(--color-bg-gradient-start) 0%, var(--color-bg-gradient-end) 100%);
@@ -67,6 +68,9 @@
 
 .feature:hover {
   transform: translateY(-4px);
+  background: var(--surface-elevated);
+  border-color: var(--border-emphasis);
+  box-shadow: var(--shadow-lg);
 }
 
 .featureIcon {
@@ -111,13 +115,18 @@
 }
 
 .primaryButton:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 18px 40px rgba(59,130,246,0.18);
+  transform: translateY(-3px) scale(1.02);
+  background: linear-gradient(135deg, var(--brand-600) 0%, var(--brand-700) 100%);
+  box-shadow: var(--shadow-xl);
 }
 
 .primaryButton:focus {
-  outline: none;
-  box-shadow: 0 0 0 6px rgba(59,130,246,0.12);
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.primaryButton:active {
+  transform: translateY(-1px) scale(1.01);
 }
 
 .secondaryActions {
@@ -136,7 +145,7 @@
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.22s cubic-bezier(.2,.9,.2,1);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -184,6 +193,13 @@
 .joinInput:focus {
   outline: none;
   border-color: var(--primary-500);
+}
+
+.error {
+  color: #ff6b6b;
+  font-size: 14px;
+  margin-bottom: 12px;
+  text-align: left;
 }
 
 .joinButton {
