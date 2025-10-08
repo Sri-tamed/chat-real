@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { MdScreenShare, MdStopScreenShare } from 'react-icons/md';
+
 import styles from './ScreenShare.module.css';
 
 interface Props {
@@ -13,7 +14,7 @@ export const ScreenShare = ({ onShareStart, onShareEnd }: Props) => {
 
   const startShare = async () => {
     try {
-      // @ts-ignore – older TS definitions
+      // @ts-expect-error – older TypeScript definitions
       const stream = await navigator.mediaDevices.getDisplayMedia({
         video: true,
         audio: true,
