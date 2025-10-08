@@ -1,18 +1,19 @@
 import { useState } from 'react';
-import { 
-  MdAccountCircle, 
-  MdSettings, 
-  MdLogin, 
+import {
+  MdAccountCircle,
+  MdSettings,
+  MdLogin,
   MdHelpOutline,
   MdKeyboardArrowDown,
   MdMenu,
-  MdClose
+  MdClose,
 } from 'react-icons/md';
 
-import styles from './Header.module.css';
-import { ThemeToggle } from '../ThemeToggle/index.tsx';
-import { SettingsModal } from '../SettingsModal';
 import { HelpModal } from '../HelpModal';
+import { SettingsModal } from '../SettingsModal';
+import { ThemeToggle } from '../ThemeToggle/index.tsx';
+
+import styles from './Header.module.css';
 
 interface HeaderProps {
   onHelpClick?: () => void;

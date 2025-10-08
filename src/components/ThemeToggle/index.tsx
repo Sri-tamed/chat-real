@@ -1,5 +1,7 @@
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
+
 import { useTheme } from '../../hooks/useTheme';
+
 import styles from './themeToggle.module.css';
 
 export const ThemeToggle = () => {

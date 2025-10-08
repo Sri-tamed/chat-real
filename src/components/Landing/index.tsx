@@ -1,19 +1,20 @@
 import { useState } from 'react';
-import { 
-  MdVideoCall, 
-  MdMic, 
-  MdVideocam, 
-  MdSecurity, 
-  MdDevices, 
+import {
+  MdVideoCall,
+  MdMic,
+  MdVideocam,
+  MdSecurity,
+  MdDevices,
   MdGroup,
   MdArrowForward,
-  MdAccessTime 
+  MdAccessTime,
 } from 'react-icons/md';
 
 import { generateRoomId } from '../../utils/roomUtils';
 import { CameraTest } from '../CameraTest';
 import { Header } from '../Header';
 import { HelpModal } from '../HelpModal';
+
 import styles from './Landing.module.css';
 
 interface LandingProps {

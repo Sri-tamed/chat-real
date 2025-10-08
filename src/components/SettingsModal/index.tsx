@@ -1,6 +1,8 @@
 import { MdClose } from 'react-icons/md';
+
 import { useTheme } from '../../hooks/useTheme';
 import { ThemeToggle } from '../ThemeToggle/index.tsx';
+
 import styles from './SettingsModal.module.css';
 
 interface SettingsModalProps {
