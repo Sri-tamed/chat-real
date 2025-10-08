@@ -7,11 +7,11 @@ import {
   MdMessage 
 } from 'react-icons/md';
 
+import { ScreenShare } from '../ScreenShare';
+
 import styles from './Controls.module.css';
 
 import type { MediaState } from '../../types';
-
-import { ScreenShare } from '../ScreenShare';
 
 interface ControlsProps {
   mediaState: MediaState;
