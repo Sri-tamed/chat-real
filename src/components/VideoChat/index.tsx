@@ -29,7 +29,8 @@ export const VideoChat = ({ roomId, onBackToLanding }: VideoChatProps) => {
     endCall,
     retryConnection,
     socket,
-    username
+    username,
+    webRTCService,
   } = useVideoChat(roomId);
 
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -112,6 +113,7 @@ export const VideoChat = ({ roomId, onBackToLanding }: VideoChatProps) => {
         onToggleAudio={toggleAudio}
         onToggleVideo={toggleVideo}
         onToggleChat={toggleChat}
+        webRTC={webRTCService}
       />
 
       {isChatOpen && socket && (
